@@ -143,11 +143,12 @@ class GPS:
         best_j = None
         _iter = 0
         for j in range(new_foi):
-            if _iter % 100000 == 0:
+            if _iter % 5 <= 5:
                 clear_last_line()
-                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
-                percentage = round(_iter / ((2 ** len(arrivals)) - 1) * 100)
+                logging.debug(f"j: {_iter} of {new_foi-1}")
+                percentage = round(_iter / (new_foi-1) * 100)
                 print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
+
             beta_candidate = GPS.LoSC_Bouillard(arrivals, sc, weights, new_foi, j)
             delay_candidate = NC.delay_bound_token_bucket_rate_latency(arrivals[new_foi],
                                                                        beta_candidate)
@@ -188,7 +189,7 @@ class GPS:
         for M in subsetlist:
             if len(M) == 0:
                 continue
-            if _iter % 100000 == 0:
+            if _iter % 30000 == 0:
                 clear_last_line()
                 logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
                 percentage = round(_iter / ((2 ** len(arrivals)) - 1) * 100)
