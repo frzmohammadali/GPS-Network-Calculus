@@ -181,12 +181,12 @@ def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     print("Chang")
     print("-----\n\n")
     subsets = powerset_non_empty_generator(list(range(len(alphas))))
-    result["Chang (homogeneous-optimised)"] = {
+    result["Chang"] = {
         'LoSC': GPS.LoSC_Chang_optimizeByDelayBound(arrivals=alphas, sc=beta,
                                                     weights=alphas_weights, foi=foi_index,
                                                     subsetlist=subsets)
     }
-    result["Chang (homogeneous-optimised)"][
+    result["Chang"][
         'delay bound'] = NC.delay_bound_token_bucket_rate_latency(alpha=alphas[foi_index], beta=
     result['Chang (homogeneous-optimised)']['LoSC'][0])
     print("--done\n\n")

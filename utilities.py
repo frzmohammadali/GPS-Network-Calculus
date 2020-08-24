@@ -66,9 +66,9 @@ class ReturnType:
     INDEX = 1
 
 class WeightsMode:
-    EQUAL = 0
-    RPPS = 1
-    RANDOM = 2
+    EQUAL = 'EQUAL'
+    RPPS = 'RPPS'
+    RANDOM = 'RANDOM'
 
 
 def length_distinct_subsets(seq, return_type=ReturnType.INDEX, subseteq=False):
