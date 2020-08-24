@@ -1,3 +1,4 @@
+import datetime
 import logging
 import sys
 
@@ -85,6 +86,7 @@ class GPS:
         # in terms of delay
         best_m = None
         _iter = 0
+        start = datetime.datetime.now()
         for M in subsetlist:
             if len(M) == 0:
                 continue
@@ -103,6 +105,9 @@ class GPS:
                 best_m = M
             _iter += 1
 
+        duration = datetime.datetime.now() - start
+        print("total computation time: ",
+              ":".join([str(round(float(i))).zfill(2) for i in str(duration).split(":")]))
         return beta_i, f'best_m (len)={len(best_m)}'
 
     @staticmethod
@@ -142,6 +147,7 @@ class GPS:
         # in terms of delay
         best_j = None
         _iter = 0
+        start = datetime.datetime.now()
         for j in range(new_foi):
             if _iter % 5 <= 5:
                 clear_last_line()
@@ -158,6 +164,9 @@ class GPS:
                 best_j = j
             _iter += 1
 
+        duration = datetime.datetime.now() - start
+        print("total computation time: ",":".join([str(round(float(i))).zfill(2) for i in str(
+                duration).split(":")]))
         return beta_i, f'best_j={best_j}'
 
     @staticmethod
@@ -186,6 +195,7 @@ class GPS:
         # in terms of delay
         best_m = None
         _iter = 0
+        start = datetime.datetime.now()
         for M in subsetlist:
             if len(M) == 0:
                 continue
@@ -204,4 +214,7 @@ class GPS:
                 best_m = M
             _iter += 1
 
+        duration = datetime.datetime.now() - start
+        print("total computation time: ",
+              ":".join([str(round(float(i))).zfill(2) for i in str(duration).split(":")]))
         return beta_i, f'best_m (len)={len(best_m)}'
