@@ -1,8 +1,10 @@
 import logging
+import sys
 
 from src.arrival_curve import ArrivalCurve, TokenBucket
 from src.service_curve import ServiceCurve, RateLatency, WorkConservingLink
 from src.nc import NC
+from src.utilities import clear_output, clear_last_line
 
 
 class GPS:
@@ -86,8 +88,12 @@ class GPS:
         for M in subsetlist:
             if len(M) == 0:
                 continue
-            if _iter % 100000 == 0:
-                logging.debug(f"M: {_iter} of {2**len(arrivals)}")
+            if _iter % 30000 == 0:
+                clear_last_line()
+                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
+                percentage = round(_iter / ((2**len(arrivals)) - 1) * 100)
+                print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
+
             beta_candidate = GPS.LoSC_Chang(arrivals, sc, weights, foi, M)
             delay_candidate = NC.delay_bound_token_bucket_rate_latency(arrivals[foi],
                                                                        beta_candidate)
@@ -138,7 +144,10 @@ class GPS:
         _iter = 0
         for j in range(new_foi):
             if _iter % 100000 == 0:
-                logging.debug(f"M: {_iter} of {2**len(arrivals)}")
+                clear_last_line()
+                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
+                percentage = round(_iter / ((2 ** len(arrivals)) - 1) * 100)
+                print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
             beta_candidate = GPS.LoSC_Bouillard(arrivals, sc, weights, new_foi, j)
             delay_candidate = NC.delay_bound_token_bucket_rate_latency(arrivals[new_foi],
                                                                        beta_candidate)
@@ -180,7 +189,11 @@ class GPS:
             if len(M) == 0:
                 continue
             if _iter % 100000 == 0:
-                logging.debug(f"M: {_iter} of {2**len(arrivals)}")
+                clear_last_line()
+                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
+                percentage = round(_iter / ((2 ** len(arrivals)) - 1) * 100)
+                print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
+
             beta_candidate = GPS.LoSC_BL_Consistent_Chang(arrivals, sc, weights, foi, M)
             delay_candidate = NC.delay_bound_token_bucket_rate_latency(arrivals[foi],
                                                                        beta_candidate)

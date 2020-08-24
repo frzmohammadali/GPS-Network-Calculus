@@ -2,8 +2,6 @@ import copy
 import logging
 import random
 import time
-from pprint import pprint
-from tempfile import _infer_return_type
 
 logging.basicConfig(
         format="[%(levelname)s] %(message)s (%(filename)s, %(funcName)s(), line %(lineno)d, %(asctime)s)",
@@ -17,7 +15,8 @@ from src.arrival_curve import TokenBucket
 from src.service_curve import WorkConservingLink, RateLatency
 from src.gps import GPS
 from src.nc import NC
-from src.utilities import distinct_by, powerset_non_empty_generator, length_distinct_subsets, ReturnType
+from src.utilities import distinct_by, powerset_non_empty_generator, length_distinct_subsets, \
+    ReturnType, WeightsMode, clear_output
 
 
 # homogeneous arrivals analysis optimized by leftover service curve rate (max)
@@ -149,7 +148,7 @@ def homo_arr_analysis_OBDB(number_of_flows):
 
 
 # homogeneous arrivals analysis optimized by delay bound (min)
-def hetro_arr_analysis_OBDB(number_of_flows):
+def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     result = dict()
     t = 1
     # b=random(1,5) Mb, r=random(3,30) Mb/s, R=2400 Mb/s (2.4 Gb/s), T=2.0 seconds
@@ -158,7 +157,15 @@ def hetro_arr_analysis_OBDB(number_of_flows):
     alphas = [TokenBucket(b=random.randint(1,5), r=random.randint(3,30), t=t) for _ in
               range(number_of_flows)]
     # let's set weights to be equal to 1
-    alphas_weights = [1 for _ in alphas]
+    if weight_mode == WeightsMode.EQUAL:
+        alphas_weights = [1 for _ in alphas]
+    elif weight_mode == WeightsMode.RPPS:
+        alphas_weights = [__a.r for __a in alphas]
+    elif weight_mode == WeightsMode.RANDOM:
+        alphas_weights = [random.randint(1,5) for _ in alphas]
+    else:
+        raise Exception("WeightMode not recognized : " + weight_mode)
+
     foi_index = 1
     # beta = WorkConservingLink(c=2400,t=t)
     beta = RateLatency(R=2400, T=2.0, t=t)
@@ -171,6 +178,8 @@ def hetro_arr_analysis_OBDB(number_of_flows):
     result["PG (General)"]['delay bound'] = NC.delay_bound_token_bucket_rate_latency(
             alpha=alphas[foi_index], beta=result['PG (General)']['LoSC'])
 
+    print("Chang")
+    print("-----\n\n")
     subsets = powerset_non_empty_generator(list(range(len(alphas))))
     result["Chang (homogeneous-optimised)"] = {
         'LoSC': GPS.LoSC_Chang_optimizeByDelayBound(arrivals=alphas, sc=beta,
@@ -180,7 +189,10 @@ def hetro_arr_analysis_OBDB(number_of_flows):
     result["Chang (homogeneous-optimised)"][
         'delay bound'] = NC.delay_bound_token_bucket_rate_latency(alpha=alphas[foi_index], beta=
     result['Chang (homogeneous-optimised)']['LoSC'][0])
+    print("--done\n\n")
 
+    print("Bouillard")
+    print("---------\n\n")
     result['Bouillard'] = {
         'LoSC': GPS.LoSC_Bouillard_optimizeByDelayBound(arrivals=copy.deepcopy(alphas), sc=beta,
                                                         weights=copy.deepcopy(alphas_weights),
@@ -188,7 +200,10 @@ def hetro_arr_analysis_OBDB(number_of_flows):
     }
     result['Bouillard']['delay bound'] = NC.delay_bound_token_bucket_rate_latency(
             alpha=alphas[foi_index], beta=result['Bouillard']['LoSC'][0])
+    print("--done\n\n")
 
+    print("BL")
+    print("--\n\n")
     # we change N\{i} to N such that always i in M to make its semantic consistent with chang
     # semantic
     _subset_BL = powerset_non_empty_generator(list(range(len(alphas))))
@@ -199,11 +214,13 @@ def hetro_arr_analysis_OBDB(number_of_flows):
     }
     result["Burchard, Liebeherr"]['delay bound'] = NC.delay_bound_token_bucket_rate_latency(
             alpha=alphas[foi_index], beta=result['Burchard, Liebeherr']['LoSC'][0])
-
+    print("--done\n\n")
     time.sleep(0.5)
     print()
     print("number of arrivals:", len(alphas))
     print('flow of interest:', alphas[foi_index])
+    print('weights mode:', str(weight_mode))
+    print("distinct weights: ", list(set(alphas_weights)))
     for key, value in result.items():
         print(f'{key: <30}', ": ", value)
 
@@ -211,6 +228,13 @@ def hetro_arr_analysis_OBDB(number_of_flows):
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
 
-    # hetro_arr_analysis_OBDB(5)
-    hetro_arr_analysis_OBDB(24)
-    # hetro_arr_analysis_OBDB(79)
+    clear_output()
+    print("\n")
+    print("==========================")
+    print("==== Analysis Started ====")
+    print("==========================")
+    print("\n")
+
+    hetro_arr_analysis_OBDB(24, WeightsMode.EQUAL)
+    hetro_arr_analysis_OBDB(24, WeightsMode.RPPS)
+    hetro_arr_analysis_OBDB(24, WeightsMode.RANDOM)
