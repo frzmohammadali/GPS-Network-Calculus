@@ -188,7 +188,7 @@ def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     }
     result["Chang"][
         'delay bound'] = NC.delay_bound_token_bucket_rate_latency(alpha=alphas[foi_index], beta=
-    result['Chang (homogeneous-optimised)']['LoSC'][0])
+    result['Chang']['LoSC'][0])
     print("--done\n\n")
 
     print("Bouillard")
@@ -219,7 +219,8 @@ def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     print()
     print("number of arrivals:", len(alphas))
     print('flow of interest:', alphas[foi_index])
-    print('weights mode:', str(weight_mode))
+    print('weights mode:', weight_mode)
+    print('weight of the flow of interest:', alphas_weights[foi_index])
     print("distinct weights: ", list(set(alphas_weights)))
     for key, value in result.items():
         print(f'{key: <30}', ": ", value)
@@ -236,6 +237,6 @@ if __name__ == '__main__':
     print("==========================")
     print("\n")
 
-    hetro_arr_analysis_OBDB(24, WeightsMode.EQUAL)
-    hetro_arr_analysis_OBDB(24, WeightsMode.RPPS)
-    hetro_arr_analysis_OBDB(24, WeightsMode.RANDOM)
+    hetro_arr_analysis_OBDB(28, WeightsMode.EQUAL)
+    hetro_arr_analysis_OBDB(28, WeightsMode.RPPS)
+    hetro_arr_analysis_OBDB(28, WeightsMode.RANDOM)

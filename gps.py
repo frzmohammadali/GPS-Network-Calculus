@@ -87,13 +87,15 @@ class GPS:
         best_m = None
         _iter = 0
         start = datetime.datetime.now()
+        mod = (((2 ** len(arrivals)) - 2) // 2500) if (((2 ** len(arrivals)) - 2) // 2500) != 0 \
+                else 1
         for M in subsetlist:
             if len(M) == 0:
                 continue
-            if _iter % 30000 == 0:
+            if round(_iter % mod) == 0:
                 clear_last_line()
-                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
-                percentage = round(_iter / ((2**len(arrivals)) - 1) * 100)
+                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 2}")
+                percentage = round(_iter / ((2**len(arrivals)) - 2) * 100)
                 print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
 
             beta_candidate = GPS.LoSC_Chang(arrivals, sc, weights, foi, M)
@@ -196,14 +198,16 @@ class GPS:
         best_m = None
         _iter = 0
         start = datetime.datetime.now()
+        mod = ((len(subsetlist) - 1) // 2500) if (((2 ** len(
+            arrivals)) - 2) // 2500) != 0 else 1
         for M in subsetlist:
             if len(M) == 0:
                 continue
-            if _iter % 30000 == 0:
-                clear_last_line()
-                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
-                percentage = round(_iter / ((2 ** len(arrivals)) - 1) * 100)
-                print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
+            # if round(_iter % mod) == 0:
+            clear_last_line()
+            logging.debug(f"M: {_iter} of {len(subsetlist) - 1}")
+            percentage = round(_iter / (len(subsetlist) - 1) * 100)
+            print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
 
             beta_candidate = GPS.LoSC_BL_Consistent_Chang(arrivals, sc, weights, foi, M)
             delay_candidate = NC.delay_bound_token_bucket_rate_latency(arrivals[foi],
