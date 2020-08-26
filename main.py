@@ -244,15 +244,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if not args.mode or args.mode == 'all':
         print('analysis mode: all\n')
-        hetro_arr_analysis_OBDB(28, WeightsMode.EQUAL)
-        hetro_arr_analysis_OBDB(28, WeightsMode.RPPS)
-        hetro_arr_analysis_OBDB(28, WeightsMode.RANDOM)
+        hetro_arr_analysis_OBDB(79, WeightsMode.EQUAL)
+        hetro_arr_analysis_OBDB(79, WeightsMode.RPPS)
+        hetro_arr_analysis_OBDB(79, WeightsMode.RANDOM)
     elif args.mode == 'ew':
         print('analysis mode: equal weights\n')
-        hetro_arr_analysis_OBDB(28, WeightsMode.EQUAL)
+        hetro_arr_analysis_OBDB(79, WeightsMode.EQUAL)
     elif args.mode == 'rpps':
         print('analysis mode: rpps\n')
-        hetro_arr_analysis_OBDB(28, WeightsMode.RPPS)
+        hetro_arr_analysis_OBDB(79, WeightsMode.RPPS)
     elif args.mode == 'rand':
         print('analysis mode: rand\n')
-        hetro_arr_analysis_OBDB(28, WeightsMode.RANDOM)
+        hetro_arr_analysis_OBDB(79, WeightsMode.RANDOM)
