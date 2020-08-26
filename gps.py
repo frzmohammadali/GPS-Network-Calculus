@@ -87,8 +87,9 @@ class GPS:
         best_m = None
         _iter = 1
         start = datetime.datetime.now()
-        mod = (((2 ** len(arrivals)) - 1) // 2500) if (((2 ** len(arrivals)) - 1) // 2500) != 0 \
-                else 1
+        # mod = (((2 ** len(arrivals)) - 1) // 2500) if (((2 ** len(arrivals)) - 1) // 2500) != 0 \
+        #         else 1
+        mod = 100000
         for M in subsetlist:
             if len(M) == 0:
                 continue
@@ -200,8 +201,9 @@ class GPS:
         best_m = None
         _iter = 1
         start = datetime.datetime.now()
-        mod = ((2 ** (len(arrivals) - 1)) // 2000) if ((2 ** (len(
-            arrivals) - 1)) // 2000) != 0 else 1
+        # mod = ((2 ** (len(arrivals) - 1)) // 2000) if ((2 ** (len(
+        #     arrivals) - 1)) // 2000) != 0 else 1
+        mod = 100000
         for M in subsetlist:
             if len(M) == 0:
                 continue
