@@ -1,0 +1,41 @@
+Chang
+-----
+
+
+M: 268435455 of 268435455
+total computation time:  02:17:49
+--done
+
+
+Bouillard
+---------
+
+
+j: 27 of 27
+total computation time:  00:00:00
+--done
+
+
+BL
+--
+
+
+M: 134217728 of 134217728
+total computation time:  01:08:54
+--done
+
+
+
+number of arrivals: 28
+flow of interest: <TokenBucket r=18 b=4 />
+weights mode: RANDOM
+weight of the flow of interest: 4
+distinct weights:  [1, 2, 3, 4, 5]
+PG (General)                   :  {'LoSC': <RateLatency R=112.9412 T=2.0 />, 'delay bound': 2.0354}
+Chang                          :  {'LoSC': (<RateLatency R=112.9412 T=2.0 />, 'best_m (len)=28'), 'delay bound': 2.0354}
+Bouillard                      :  {'LoSC': (<RateLatency R=120.0 T=2.0 />, 'best_j=0'), 'delay bound': 2.0333}
+Burchard, Liebeherr            :  {'LoSC': (<RateLatency R=112.9412 T=2.0 />, 'best_m (len)=28'), 'delay bound': 2.0354}
+
+
+
+
