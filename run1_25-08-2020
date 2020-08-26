@@ -1,0 +1,115 @@
+
+
+==========================
+==== Analysis Started ====
+==========================
+
+24 arrivals
+
+Chang
+-----
+[DEBUG] M: 16770000 of 16777215 (gps.py, LoSC_Chang_optimizeByDelayBound(), line 95, 2020-08-24 18:31:43)
+calculating #################################################################################################### 100%
+total computation time:  00:07:20
+--done
+
+
+Bouillard
+---------
+[DEBUG] j: 22 of 22 (gps.py, LoSC_Bouillard_optimizeByDelayBound(), line 154, 2020-08-24 18:31:43)
+calculating #################################################################################################### 100%
+total computation time:  00:00:00
+--done
+
+
+BL
+--
+[DEBUG] M: 8370000 of 16777215 (gps.py, LoSC_BL_optimizeByDelayBound(), line 204, 2020-08-24 18:35:44)
+calculating ##################################################-------------------------------------------------- 50%
+total computation time:  00:03:45
+--done
+
+
+
+number of arrivals: 24
+flow of interest: <TokenBucket r=18 b=4 />
+weights mode: 0
+distinct weights:  [1]
+PG (General)                   :  {'LoSC': <RateLatency R=100.0 T=2.0 />, 'delay bound': 2.04}
+Chang (homogeneous-optimised)  :  {'LoSC': (<RateLatency R=100.0 T=2.0 />, 'best_m (len)=24'), 'delay bound': 2.04}
+Bouillard                      :  {'LoSC': (<RateLatency R=104.3478 T=2.0 />, 'best_j=0'), 'delay bound': 2.0383}
+Burchard, Liebeherr            :  {'LoSC': (<RateLatency R=100.0 T=2.0 />, 'best_m (len)=24'), 'delay bound': 2.04}
+
+
+
+
+Chang
+-----
+[DEBUG] M: 16770000 of 16777215 (gps.py, LoSC_Chang_optimizeByDelayBound(), line 95, 2020-08-24 18:43:07)
+calculating #################################################################################################### 100%
+total computation time:  00:07:21
+--done
+
+
+Bouillard
+---------
+[DEBUG] j: 22 of 22 (gps.py, LoSC_Bouillard_optimizeByDelayBound(), line 154, 2020-08-24 18:43:07)
+calculating #################################################################################################### 100%
+total computation time:  00:00:00
+--done
+
+
+BL
+--
+[DEBUG] M: 8370000 of 16777215 (gps.py, LoSC_BL_optimizeByDelayBound(), line 204, 2020-08-24 18:47:09)
+calculating ##################################################-------------------------------------------------- 50%
+total computation time:  00:03:46
+--done
+
+
+
+number of arrivals: 24
+flow of interest: <TokenBucket r=18 b=4 />
+weights mode: 1
+distinct weights:  [3, 4, 5, 7, 10, 12, 15, 17, 18, 21, 22, 23, 24, 26, 27, 29, 30]
+PG (General)                   :  {'LoSC': <RateLatency R=110.2041 T=2.0 />, 'delay bound': 2.0363}
+Chang (homogeneous-optimised)  :  {'LoSC': (<RateLatency R=110.2041 T=2.0 />, 'best_m (len)=24'), 'delay bound': 2.0363}
+Bouillard                      :  {'LoSC': (<RateLatency R=111.3402 T=2.0 />, 'best_j=0'), 'delay bound': 2.0359}
+Burchard, Liebeherr            :  {'LoSC': (<RateLatency R=110.2041 T=2.0 />, 'best_m (len)=24'), 'delay bound': 2.0363}
+
+
+
+
+Chang
+-----
+[DEBUG] M: 16770000 of 16777215 (gps.py, LoSC_Chang_optimizeByDelayBound(), line 95, 2020-08-24 18:54:35)
+calculating #################################################################################################### 100%
+total computation time:  00:07:24
+--done
+
+
+Bouillard
+---------
+[DEBUG] j: 22 of 22 (gps.py, LoSC_Bouillard_optimizeByDelayBound(), line 154, 2020-08-24 18:54:35)
+calculating #################################################################################################### 100%
+total computation time:  00:00:00
+--done
+
+
+BL
+--
+[DEBUG] M: 8370000 of 16777215 (gps.py, LoSC_BL_optimizeByDelayBound(), line 204, 2020-08-24 18:58:33)
+calculating ##################################################-------------------------------------------------- 50%
+total computation time:  00:03:43
+--done
+
+
+
+number of arrivals: 24
+flow of interest: <TokenBucket r=18 b=4 />
+weights mode: 2
+distinct weights:  [1, 2, 3, 4, 5]
+PG (General)                   :  {'LoSC': <RateLatency R=64.0 T=2.0 />, 'delay bound': 2.0625}
+Chang (homogeneous-optimised)  :  {'LoSC': (<RateLatency R=64.0 T=2.0 />, 'best_m (len)=24'), 'delay bound': 2.0625}
+Bouillard                      :  {'LoSC': (<RateLatency R=65.7534 T=2.0 />, 'best_j=0'), 'delay bound': 2.0608}
+Burchard, Liebeherr            :  {'LoSC': (<RateLatency R=64.0 T=2.0 />, 'best_m (len)=24'), 'delay bound': 2.0625}

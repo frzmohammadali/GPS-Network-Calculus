@@ -5,7 +5,7 @@ import sys
 from src.arrival_curve import ArrivalCurve, TokenBucket
 from src.service_curve import ServiceCurve, RateLatency, WorkConservingLink
 from src.nc import NC
-from src.utilities import clear_output, clear_last_line
+from src.utilities import clear_output, clear_last_line, print_write, write
 
 
 class GPS:
@@ -85,17 +85,17 @@ class GPS:
         min_delay = None
         # in terms of delay
         best_m = None
-        _iter = 0
+        _iter = 1
         start = datetime.datetime.now()
-        mod = (((2 ** len(arrivals)) - 2) // 2500) if (((2 ** len(arrivals)) - 2) // 2500) != 0 \
+        mod = (((2 ** len(arrivals)) - 1) // 2500) if (((2 ** len(arrivals)) - 1) // 2500) != 0 \
                 else 1
         for M in subsetlist:
             if len(M) == 0:
                 continue
             if round(_iter % mod) == 0:
                 clear_last_line()
-                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 2}")
-                percentage = round(_iter / ((2**len(arrivals)) - 2) * 100)
+                logging.debug(f"M: {_iter} of {(2**len(arrivals)) - 1}")
+                percentage = round(_iter / ((2**len(arrivals)) - 1) * 100)
                 print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
 
             beta_candidate = GPS.LoSC_Chang(arrivals, sc, weights, foi, M)
@@ -107,8 +107,9 @@ class GPS:
                 best_m = M
             _iter += 1
 
+        write(f"M: {_iter-1} of {(2**len(arrivals)) - 1}")
         duration = datetime.datetime.now() - start
-        print("total computation time: ",
+        print_write("total computation time: ",
               ":".join([str(round(float(i))).zfill(2) for i in str(duration).split(":")]))
         return beta_i, f'best_m (len)={len(best_m)}'
 
@@ -148,13 +149,13 @@ class GPS:
         min_delay = None
         # in terms of delay
         best_j = None
-        _iter = 0
+        _iter = 1
         start = datetime.datetime.now()
         for j in range(new_foi):
             if _iter % 5 <= 5:
                 clear_last_line()
-                logging.debug(f"j: {_iter} of {new_foi-1}")
-                percentage = round(_iter / (new_foi-1) * 100)
+                logging.debug(f"j: {_iter} of {new_foi}")
+                percentage = round(_iter / new_foi * 100)
                 print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
 
             beta_candidate = GPS.LoSC_Bouillard(arrivals, sc, weights, new_foi, j)
@@ -166,8 +167,9 @@ class GPS:
                 best_j = j
             _iter += 1
 
+        write(f"j: {_iter-1} of {new_foi}")
         duration = datetime.datetime.now() - start
-        print("total computation time: ",":".join([str(round(float(i))).zfill(2) for i in str(
+        print_write("total computation time: ",":".join([str(round(float(i))).zfill(2) for i in str(
                 duration).split(":")]))
         return beta_i, f'best_j={best_j}'
 
@@ -196,18 +198,18 @@ class GPS:
         min_delay = None
         # in terms of delay
         best_m = None
-        _iter = 0
+        _iter = 1
         start = datetime.datetime.now()
-        mod = ((len(subsetlist) - 1) // 2500) if (((2 ** len(
-            arrivals)) - 2) // 2500) != 0 else 1
+        mod = ((2 ** (len(arrivals) - 1)) // 2000) if ((2 ** (len(
+            arrivals) - 1)) // 2000) != 0 else 1
         for M in subsetlist:
             if len(M) == 0:
                 continue
-            # if round(_iter % mod) == 0:
-            clear_last_line()
-            logging.debug(f"M: {_iter} of {len(subsetlist) - 1}")
-            percentage = round(_iter / (len(subsetlist) - 1) * 100)
-            print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
+            if round(_iter % mod) == 0:
+                clear_last_line()
+                logging.debug(f"M: {_iter} of {(2**(len(arrivals) - 1))}")
+                percentage = round(_iter / (2 ** (len(arrivals) - 1)) * 100)
+                print(f"calculating {'#'*percentage}{'-'*(abs(100-percentage))} {percentage}%")
 
             beta_candidate = GPS.LoSC_BL_Consistent_Chang(arrivals, sc, weights, foi, M)
             delay_candidate = NC.delay_bound_token_bucket_rate_latency(arrivals[foi],
@@ -218,7 +220,8 @@ class GPS:
                 best_m = M
             _iter += 1
 
+        write(f"M: {_iter-1} of {(2**(len(arrivals) - 1))}")
         duration = datetime.datetime.now() - start
-        print("total computation time: ",
+        print_write("total computation time: ",
               ":".join([str(round(float(i))).zfill(2) for i in str(duration).split(":")]))
         return beta_i, f'best_m (len)={len(best_m)}'

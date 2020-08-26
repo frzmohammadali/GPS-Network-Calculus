@@ -1,3 +1,4 @@
+import argparse
 import copy
 import logging
 import random
@@ -16,7 +17,7 @@ from src.service_curve import WorkConservingLink, RateLatency
 from src.gps import GPS
 from src.nc import NC
 from src.utilities import distinct_by, powerset_non_empty_generator, length_distinct_subsets, \
-    ReturnType, WeightsMode, clear_output
+    ReturnType, WeightsMode, clear_output, filter_generator, print_write
 
 
 # homogeneous arrivals analysis optimized by leftover service curve rate (max)
@@ -178,8 +179,8 @@ def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     result["PG (General)"]['delay bound'] = NC.delay_bound_token_bucket_rate_latency(
             alpha=alphas[foi_index], beta=result['PG (General)']['LoSC'])
 
-    print("Chang")
-    print("-----\n\n")
+    print_write("Chang")
+    print_write("-----\n\n")
     subsets = powerset_non_empty_generator(list(range(len(alphas))))
     result["Chang"] = {
         'LoSC': GPS.LoSC_Chang_optimizeByDelayBound(arrivals=alphas, sc=beta,
@@ -189,10 +190,10 @@ def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     result["Chang"][
         'delay bound'] = NC.delay_bound_token_bucket_rate_latency(alpha=alphas[foi_index], beta=
     result['Chang']['LoSC'][0])
-    print("--done\n\n")
+    print_write("--done\n\n")
 
-    print("Bouillard")
-    print("---------\n\n")
+    print_write("Bouillard")
+    print_write("---------\n\n")
     result['Bouillard'] = {
         'LoSC': GPS.LoSC_Bouillard_optimizeByDelayBound(arrivals=copy.deepcopy(alphas), sc=beta,
                                                         weights=copy.deepcopy(alphas_weights),
@@ -200,31 +201,31 @@ def hetro_arr_analysis_OBDB(number_of_flows, weight_mode: WeightsMode):
     }
     result['Bouillard']['delay bound'] = NC.delay_bound_token_bucket_rate_latency(
             alpha=alphas[foi_index], beta=result['Bouillard']['LoSC'][0])
-    print("--done\n\n")
+    print_write("--done\n\n")
 
-    print("BL")
-    print("--\n\n")
+    print_write("BL")
+    print_write("--\n\n")
     # we change N\{i} to N such that always i in M to make its semantic consistent with chang
     # semantic
     _subset_BL = powerset_non_empty_generator(list(range(len(alphas))))
-    subset_BL = list(filter(lambda x: foi_index in x, _subset_BL))
+    subset_BL = filter_generator(lambda x: foi_index in x, _subset_BL)
     result["Burchard, Liebeherr"] = {
         'LoSC': GPS.LoSC_BL_optimizeByDelayBound(arrivals=alphas, sc=beta, weights=alphas_weights,
                                                  foi=foi_index, subsetlist=subset_BL)
     }
     result["Burchard, Liebeherr"]['delay bound'] = NC.delay_bound_token_bucket_rate_latency(
             alpha=alphas[foi_index], beta=result['Burchard, Liebeherr']['LoSC'][0])
-    print("--done\n\n")
+    print_write("--done\n\n")
     time.sleep(0.5)
-    print()
-    print("number of arrivals:", len(alphas))
-    print('flow of interest:', alphas[foi_index])
-    print('weights mode:', weight_mode)
-    print('weight of the flow of interest:', alphas_weights[foi_index])
-    print("distinct weights: ", list(set(alphas_weights)))
+    print_write()
+    print_write("number of arrivals:", len(alphas))
+    print_write('flow of interest:', alphas[foi_index])
+    print_write('weights mode:', weight_mode)
+    print_write('weight of the flow of interest:', alphas_weights[foi_index])
+    print_write("distinct weights: ", list(set(alphas_weights)))
     for key, value in result.items():
-        print(f'{key: <30}', ": ", value)
-    print("\n\n\n")
+        print_write(f'{key: <30}', ": ", value)
+    print_write("\n\n\n")
 
 
 if __name__ == '__main__':
@@ -237,6 +238,21 @@ if __name__ == '__main__':
     print("==========================")
     print("\n")
 
-    hetro_arr_analysis_OBDB(28, WeightsMode.EQUAL)
-    hetro_arr_analysis_OBDB(28, WeightsMode.RPPS)
-    hetro_arr_analysis_OBDB(28, WeightsMode.RANDOM)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--mode", help="define execution mode of the script. could be "
+                                             "['all', 'ew', 'rpps', 'rand']")
+    args = parser.parse_args()
+    if not args.mode or args.mode == 'all':
+        print('analysis mode: all\n')
+        hetro_arr_analysis_OBDB(28, WeightsMode.EQUAL)
+        hetro_arr_analysis_OBDB(28, WeightsMode.RPPS)
+        hetro_arr_analysis_OBDB(28, WeightsMode.RANDOM)
+    elif args.mode == 'ew':
+        print('analysis mode: equal weights\n')
+        hetro_arr_analysis_OBDB(28, WeightsMode.EQUAL)
+    elif args.mode == 'rpps':
+        print('analysis mode: rpps\n')
+        hetro_arr_analysis_OBDB(28, WeightsMode.RPPS)
+    elif args.mode == 'rand':
+        print('analysis mode: rand\n')
+        hetro_arr_analysis_OBDB(28, WeightsMode.RANDOM)

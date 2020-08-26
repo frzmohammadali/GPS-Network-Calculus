@@ -1,3 +1,4 @@
+import datetime
 import os
 import subprocess
 import sys
@@ -96,3 +97,22 @@ def clear_output():
 def clear_last_line():
     subprocess.call('', shell=True)
     print("\033[F\033[F\033[K", end="\r")
+
+def filter_generator(fn, gen):
+    for item in gen:
+        if fn(item):
+            yield item
+
+time_of_run = datetime.datetime.now().strftime('%Y_%m_%d-%H_%M_%S')
+def print_write(*s):
+    outputfile = (f"./main.py"
+                 f".run_{time_of_run}.log")
+    with open(os.path.abspath(outputfile), "a") as f:
+        f.write(" ".join([str(_s) for _s in s]) + '\n')
+    print(*s)
+
+def write(*s):
+    outputfile = (f"./main.py"
+                 f".run_{time_of_run}.log")
+    with open(os.path.abspath(outputfile), "a") as f:
+        f.write(" ".join([str(_s) for _s in s]) + '\n')
