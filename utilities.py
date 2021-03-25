@@ -2,7 +2,11 @@ import datetime
 import os
 import subprocess
 import sys
+from scipy.optimize import fsolve
 
+
+def findIntersection(fun1,fun2,x0):
+    return fsolve(lambda x : fun1(x) - fun2(x),x0)
 
 def powerset_list(lst):
     sublists = [[]]
@@ -70,6 +74,7 @@ class WeightsMode:
     EQUAL = 'EQUAL'
     RPPS = 'RPPS'
     RANDOM = 'RANDOM'
+    FIX = 'FIX'
 
 
 def length_distinct_subsets(seq, return_type=ReturnType.INDEX, subseteq=False):
@@ -105,14 +110,15 @@ def filter_generator(fn, gen):
 
 time_of_run = datetime.datetime.now().strftime('%Y_%m_%d-%H_%M_%S')
 def print_write(*s):
-    outputfile = (f"./main.py"
-                 f".run_{time_of_run}.log")
-    with open(os.path.abspath(outputfile), "a") as f:
-        f.write(" ".join([str(_s) for _s in s]) + '\n')
+    # outputfile = (f"./main.py"
+    #              f".run_{time_of_run}.log")
+    # with open(os.path.abspath(outputfile), "a") as f:
+    #     f.write(" ".join([str(_s) for _s in s]) + '\n')
     print(*s)
 
 def write(*s):
-    outputfile = (f"./main.py"
-                 f".run_{time_of_run}.log")
-    with open(os.path.abspath(outputfile), "a") as f:
-        f.write(" ".join([str(_s) for _s in s]) + '\n')
+    # outputfile = (f"./main.py"
+    #              f".run_{time_of_run}.log")
+    # with open(os.path.abspath(outputfile), "a") as f:
+    #     f.write(" ".join([str(_s) for _s in s]) + '\n')
+    pass

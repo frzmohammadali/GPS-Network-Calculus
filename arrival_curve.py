@@ -18,10 +18,10 @@ class TokenBucket(ArrivalCurve):
         self.r = r
         self.b = b
 
-    def getCurve(self):
-        return self.b + self.r * self.t if self.t != 0 else 0
+    def getCurve(self, _t):
+        return (self.b + self.r * _t) if _t != 0 else 0
 
     def __repr__(self):
-        return f'<TokenBucket r={self.r} b={self.b} />'
+        return f'<TB r={round(self.r,2)} b={round(self.b,2)}>'
 
     __str__ = __repr__

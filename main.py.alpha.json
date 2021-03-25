@@ -1,0 +1,14 @@
+{
+  "run": "plot_utilizationByDelayBound",
+  "seed": "None",
+  "number_of_flows": 10,
+  "flow_stability":"all",
+  "flow_rates": [],
+  "flow_bursts": [12.31, 1.5, 12.68, 14.06, 12.4, 13.39, 16.55, 20.07, 17.55, 11.44],
+  "weights_mode": "WeightsMode.FIX",
+  "flow_weights": [0.85, 0.15, 0.99, 0.85, 0.98, 0.71, 0.89, 0.75, 0.79, 0.97],
+  "server_rate": "all",
+  "server_delay": 0.0,
+  "target_utilization": "auto",
+  "finally": "plt.savefig('util-delay6-full-alpha.pdf')"
+}

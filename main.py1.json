@@ -1,0 +1,14 @@
+{
+  "run": "plot_utilizationByDelayBound",
+  "seed": "None",
+  "number_of_flows": 10,
+  "flow_stability":"only foi",
+  "flow_rates": [],
+  "flow_bursts": [],
+  "weights_mode": "WeightsMode.FIX",
+  "flow_weights": [],
+  "server_rate": "None",
+  "server_delay": 0.0,
+  "target_utilization": "auto",
+  "finally1": "plt.savefig('foiWeight-delay4.pdf')"
+}

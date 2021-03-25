@@ -1,0 +1,14 @@
+{
+  "run": "plot_burstOfFoiByDelayBound",
+  "seed": "None",
+  "number_of_flows": 10,
+  "flow_stability":"all",
+  "flow_rates": [],
+  "flow_bursts": [],
+  "weights_mode": "WeightsMode.FIX",
+  "flow_weights": [],
+  "server_rate": "auto",
+  "server_delay": 1.0,
+  "target_utilization": 0.75,
+  "finally": "plt.savefig('foiBurst-delay3-new.pdf')"
+}

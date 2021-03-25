@@ -15,11 +15,14 @@ class RateLatency(ServiceCurve):
         self.R = R
         super().__init__(rate=R, delay=T)
 
-    # def getCurve(self):
-    #     return self.R * max(0, self.t - self.T)
+    def getCurve(self, _t):
+        return self.R * max(0, _t - self.T)
 
     def __repr__(self):
-        return f'<RateLatency R={round(self.R,4)} T={round(self.T,4)} />'
+        server_type = "RateLatency"
+        if self.T == 0.0:
+            server_type = "ConstantRate"
+        return f'<{server_type} R={round(self.R,4)} T={round(self.T,4)} />'
 
     __str__ = __repr__
 
