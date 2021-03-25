@@ -1,5 +1,5 @@
 {
-  "run": "plot_burstOfFoiByDelayBound",
+  "run": "plot_utilizationByDelayBound",
   "seed": "None",
   "number_of_flows": 10,
   "flow_stability":"all",
@@ -8,7 +8,7 @@
   "weights_mode": "WeightsMode.FIX",
   "flow_weights": [],
   "server_rate": "auto",
-  "server_delay": 1.0,
-  "target_utilization": 0.75,
-  "finally": "plt.savefig('foiBurst-delay3-new.pdf')"
+  "server_delay": 0.0,
+  "target_utilization": "auto",
+  "finally": "plt.savefig('util-delay6-full.pdf')"
 }

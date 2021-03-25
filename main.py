@@ -274,12 +274,12 @@ class RuntimeMeasurementAnalysisDriver:
         # plot
         datalist = [
                     (graph_PG['x'], graph_PG['y'], {'label':'PG','linewidth':1, 'color':'red', 'marker':'s', 'linestyle':'-'}),
-                    (graph_chang['x'], graph_chang['y'], {'label':'chang','linewidth':2, 'color':'blue', 'marker':'^', 'linestyle':'--'}),
-                    (graph_bouillard['x'], graph_bouillard['y'], {'label':'Bouillard','linewidth':1.2, 'color':'magenta', 'marker':'o', 'linestyle':'-.'} ),
+                    (graph_chang['x'], graph_chang['y'], {'label':'Chang','linewidth':2, 'color':'blue', 'marker':'^', 'linestyle':'--'}),
+                    (graph_bouillard['x'], graph_bouillard['y'], {'label':'BBLC','linewidth':1.2, 'color':'magenta', 'marker':'o', 'linestyle':'-.'} ),
                     (graph_bouillard_new['x'], graph_bouillard_new['y'], {'label': 'Bouillard_new','linewidth':1.5, 'color':'black', 'marker':'d', 'linestyle':'-.'}),
-                    # (graph_bouillard_burstyFirst['x'], graph_bouillard_burstyFirst['y'], {'label': 'Bouillard_burstyFirst','linewidth':0.6, 'color':'cyan', 'marker':'s', 'linestyle':'-.'}),
-                    # (graph_bouillard_burst['x'], graph_bouillard_burst['y'], {'label': 'Bouillard_burst','linewidth':0.8, 'color':'tab:orange', 'marker':'d', 'linestyle':'-.'}),
-                    # (graph_bouillard_rate['x'], graph_bouillard_rate['y'], {'label': 'Bouillard_rate','linewidth':0.5, 'color':'brown', 'marker':'d', 'linestyle':'-.'}),
+                    (graph_bouillard_burstyFirst['x'], graph_bouillard_burstyFirst['y'], {'label': 'BBLC_burstyFirst','linewidth':0.6, 'color':'cyan', 'marker':'s', 'linestyle':'-.'}),
+                    (graph_bouillard_burst['x'], graph_bouillard_burst['y'], {'label': 'BBLC_burst','linewidth':0.8, 'color':'tab:orange', 'marker':'d', 'linestyle':'-.'}),
+                    (graph_bouillard_rate['x'], graph_bouillard_rate['y'], {'label': 'BBLC_rate','linewidth':0.5, 'color':'brown', 'marker':'d', 'linestyle':'-.'}),
                     (graph_BL['x'], graph_BL['y'], {'label':'BL','linewidth':2, 'color':'green', 'marker':'p', 'linestyle':':'})
                 ]
 
@@ -437,23 +437,23 @@ class RuntimeMeasurementAnalysisDriver:
 
         datalist = [
             (PG_x, PG_y, {'label':'PG','linewidth':1, 'color':'red', 'marker':'s', 'linestyle':'-'}),
-            (chang_x, chang_y, {'label':'chang','linewidth':3, 'color':'blue', 'marker':'^', 'linestyle':'--'}),
-            (bouillard_x, bouillard_y, {'label':'Bouillard','linewidth':2.5, 'color':'magenta', 'marker':'o', 'linestyle':'-.'}),
+            (chang_x, chang_y, {'label':'Chang','linewidth':3, 'color':'blue', 'marker':'^', 'linestyle':'--'}),
+            (bouillard_x, bouillard_y, {'label':'BBLC','linewidth':2.5, 'color':'magenta', 'marker':'o', 'linestyle':'-.'}),
             # (bouillard_new_x, bouillard_new_y, {'label': 'Bouillard_new','linewidth':2, 'color':'black', 'marker':'d', 'linestyle':'-.'}),
             # (bouillard_burstyFirst_x, bouillard_burstyFirst_y, {
-            #     'label'    : 'Bouillard_burstyFirst',
+            #     'label'    : 'BBLC_burstyFirst',
             #     'linewidth': 1.5,
             #     'color'    : 'cyan',
             #     'marker'   : 'd',
             #     'linestyle': '-.'
             # }), (bouillard_burst_x, bouillard_burst_y, {
-            #     'label'    : 'Bouillard_burst',
+            #     'label'    : 'BBLC_burst',
             #     'linewidth': 1,
             #     'color'    : 'tab:orange',
             #     'marker'   : 'd',
             #     'linestyle': '-.'
             # }), (bouillard_rate_x, bouillard_rate_y, {
-            #     'label'    : 'Bouillard_rate',
+            #     'label'    : 'BBLC_rate',
             #     'linewidth': 0.5,
             #     'color'    : 'brown',
             #     'marker'   : 'd',
@@ -510,8 +510,8 @@ class RuntimeMeasurementAnalysisDriver:
             'x': [],
             'y': []
         }
-        for foi_burst in tqdm([0.5, 0.75, 0.90, 1.00, 1.15, 1.30, 1.50, 2.00, 2.5, 3.0, 4.0, 5.0, 7.0, 8.0]):
-        # for foi_burst in tqdm(np.arange(10.0, 16.1, 0.5)):
+        # for foi_burst in tqdm([0.5, 0.75, 0.90, 1.00, 1.15, 1.30, 1.50, 2.00, 2.5, 3.0, 4.0, 5.0, 7.0, 8.0]):
+        for foi_burst in tqdm(np.arange(10.0, 16.1, 0.5)):
             result = dict()
             t, alphas, alphas_weights, foi_index, beta = setupInputs(number_of_flows=self.config['number_of_flows'], weight_mode=eval(self.config['weights_mode']), target_util=self.config['target_utilization'],
                                                                      seed=eval(self.config['seed']), perFlowStability=self.config['flow_stability'],
@@ -611,23 +611,23 @@ class RuntimeMeasurementAnalysisDriver:
 
         datalist = [
             (PG_x, PG_y, {'label':'PG','linewidth':1, 'color':'red', 'marker':'s', 'linestyle':'-'}),
-            (chang_x, chang_y, {'label':'chang','linewidth':3, 'color':'blue', 'marker':'^', 'linestyle':'--'}),
-            (bouillard_x, bouillard_y, {'label':'Bouillard','linewidth':2.5, 'color':'magenta', 'marker':'o', 'linestyle':'-.'}),
+            (chang_x, chang_y, {'label':'Chang','linewidth':3, 'color':'blue', 'marker':'^', 'linestyle':'--'}),
+            (bouillard_x, bouillard_y, {'label':'BBLC','linewidth':2.5, 'color':'magenta', 'marker':'o', 'linestyle':'-.'}),
             # (bouillard_new_x, bouillard_new_y, {'label': 'Bouillard_new','linewidth':2, 'color':'black', 'marker':'d', 'linestyle':'-.'}),
             # (bouillard_burstyFirst_x, bouillard_burstyFirst_y, {
-            #     'label'    : 'Bouillard_burstyFirst',
+            #     'label'    : 'BBLC_burstyFirst',
             #     'linewidth': 1.5,
             #     'color'    : 'cyan',
             #     'marker'   : 'd',
             #     'linestyle': '-.'
             # }), (bouillard_burst_x, bouillard_burst_y, {
-            #     'label'    : 'Bouillard_burst',
+            #     'label'    : 'BBLC_burst',
             #     'linewidth': 1,
             #     'color'    : 'tab:orange',
             #     'marker'   : 'd',
             #     'linestyle': '-.'
             # }), (bouillard_rate_x, bouillard_rate_y, {
-            #     'label'    : 'Bouillard_rate',
+            #     'label'    : 'BBLC_rate',
             #     'linewidth': 0.5,
             #     'color'    : 'brown',
             #     'marker'   : 'd',
